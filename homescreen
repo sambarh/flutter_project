@@ -1,0 +1,212 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:rean_firebase/model/category_model.dart';
+import 'package:rean_firebase/model/recommendation_model.dart';
+import 'package:rean_firebase/model/week_model.dart';
+import 'package:rean_firebase/view/detail_screen.dart';
+import 'package:rean_firebase/widget/category_widget.dart';
+import 'package:rean_firebase/widget/input_field.dart';
+import 'package:rean_firebase/widget/week_widget.dart';
+
+import '../widget/recommendationn_widget.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 235, 230, 230),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Hello, Sambath',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'What would you like',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    CircleAvatar(
+                      backgroundImage: AssetImage('asset/image/download.jpg'),
+                    ),
+                  ],
+                ),
+              ),
+              const Text(
+                'to cook today?',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              InputField(
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Categories',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 39, 182, 44),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 20),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < listCategory.length; i++)
+                        CategoryWidget(
+                          categoryModel: listCategory[i],
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recommendation',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 39, 182, 44),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 20),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DetailScreen(),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < listRecommend.length; i++)
+                          RecommendationWidget(
+                            recommendationModel: listRecommend[i],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recipes Of The Week',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 39, 182, 44),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 20),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DetailScreen(),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < listRecommend.length; i++)
+                          WeekWidget(
+                            weekModel: listWeekmodel[i],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 60,
+        items: const [
+          Icon(Icons.home),
+          Icon(Icons.search),
+          Icon(Icons.add),
+          Icon(Icons.bookmark),
+          Icon(Icons.person),
+        ],
+      ),
+    );
+  }
+}
